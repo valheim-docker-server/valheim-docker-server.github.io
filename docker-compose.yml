@@ -1,32 +1,10 @@
 # ==============================================================================
-version: "3.6"
-
-# ==============================================================================
-x-enabled-server: &enabled-server
-  stop_signal: SIGTERM
-  healthcheck:
-    test: [ "CMD", "health" ]
-    interval: 30s
-    timeout: 15s
-    retries: 5
-    start_period: 10s
-  environment:
-    SERVER_PASSWORD: "12345"
-  volumes:
-    - ./temp/data:/data
-    - ./temp/backups:/backups
-    - ./temp/logs:/logs
-  ports:
-    - 2456:2456/udp
-    - 2457:2457/udp
-
-x-disabled-server: &disabled-server
-  command: noop
+version: "3.8"
 
 # ==============================================================================
 services:
 
-  docs:
+  jekyll:
     image: "jekyll/jekyll:latest"
     command: jekyll serve --force_polling --livereload --incremental
     volumes:
@@ -34,16 +12,3 @@ services:
     ports:
       - 35729:35729
       - 4000:4000
-
-  dos2unix:
-    image: "adaliszk/valheim-server:${ENV_TAG:-dos2unix}"
-    build: images/dos2unix
-
-  vanilla:
-    image: "adaliszk/valheim-server:${VANILLA_TAG:-latest}"
-    build: images/vanilla
-    <<: *enabled-server
-    command:
-      - -name "Name with spaces - and - dashes"
-    depends_on:
-      - dos2unix
