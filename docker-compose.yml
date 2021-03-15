@@ -30,7 +30,7 @@ services:
     image: "jekyll/jekyll:latest"
     command: jekyll serve --config "_config.yml,_config_docker.yml" --force_polling --livereload --incremental
     volumes:
-      - ./:/srv/jekyll
+      - ./public:/srv/jekyll
     ports:
       - 35729:35729
       - 4000:4000

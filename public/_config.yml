@@ -3,7 +3,7 @@
 
 url: ""
 baseurl: ""
-source: "./public"
+source: ""
 
 remote_theme: svrooij/just-the-docs@relative-everything
 repository: adaliszk/valheim-server
